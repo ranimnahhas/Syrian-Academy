@@ -12,20 +12,14 @@ class CategoryService
         private CategoryRepository $categoryRepository
     ) {}
 
-    public function getAll()
-    {
-        return $this->categoryRepository->all();
-    }
+    
 
     public function getActive()
     {
         return $this->categoryRepository->getActive();
     }
 
-    public function getById(int $id)
-    {
-        return $this->categoryRepository->find($id);
-    }
+    
 
     public function create(array $data)
     {
@@ -75,4 +69,13 @@ class CategoryService
         $category->delete();
         return true;
     }
+    public function getAll()
+{
+    return $this->categoryRepository->all(relations: ['courses']);
+}
+
+public function getById(int $id)
+{
+    return $this->categoryRepository->find($id, ['courses']);
+}
 }
