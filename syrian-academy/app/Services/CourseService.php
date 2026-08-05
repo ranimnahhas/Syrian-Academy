@@ -53,4 +53,21 @@ public function update(int $id, array $data)
     $course->update($data);
     return $course->fresh(['category', 'teacher.user']);
 }
+public function getFree()
+{
+    return $this->courseRepository->getFree();
+}
+
+public function getPaid()
+{
+    return $this->courseRepository->getPaid();
+}
+public function getLatest(int $limit = 10)
+{
+    return $this->courseRepository->getLatest($limit);
+}
+public function getByTeacher(int $teacherId)
+{
+    return $this->courseRepository->getByTeacher($teacherId);
+}
 }

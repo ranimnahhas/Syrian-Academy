@@ -73,4 +73,52 @@ class CourseController extends BaseController
 
         return $this->sendResponse(null, 'تم حذف الكورس بنجاح');
     }
+    // كورسات مجانية
+    public function free(): JsonResponse
+    {
+      $courses = $this->courseService->getFree();
+
+        return $this->sendResponse(
+          CourseResource::collection($courses),
+          'تم جلب الكورسات المجانية بنجاح'
+        );
+    }
+
+     // كورسات مدفوعة
+    public function paid(): JsonResponse
+    {
+       $courses = $this->courseService->getPaid();
+ 
+       return $this->sendResponse(
+         CourseResource::collection($courses),
+        'تم جلب الكورسات المدفوعة بنجاح'
+      );
+    }
+    public function latest(): JsonResponse
+    {
+       $courses = $this->courseService->getLatest(10);
+
+         return $this->sendResponse(
+           CourseResource::collection($courses),
+           'تم جلب أحدث الكورسات بنجاح'
+       );
+    }
+    public function myCourses(): JsonResponse
+    {
+        $user = auth()->user();
+
+       // التأكد إن المستخدم معلم
+       $teacher = \App\Models\Teacher::where('user_id', $user->id)->first();
+
+       if (!$teacher) {
+           return $this->sendError('غير مصرح - يجب أن تكون معلماً', [], 403);
+        }
+
+       $courses = $this->courseService->getByTeacher($teacher->id);
+
+       return $this->sendResponse(
+           CourseResource::collection($courses),
+           'تم جلب كورساتك بنجاح'
+       );
+    }
 }

@@ -7,6 +7,7 @@ use App\Http\Requests\Api\V1\UpdateCategoryRequest;
 use App\Http\Resources\Api\V1\CategoryResource;
 use App\Services\CategoryService;
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\Api\V1\CourseResource;
 
 class CategoryController extends BaseController
 {
@@ -72,5 +73,19 @@ class CategoryController extends BaseController
     }
 
     return $this->sendResponse(null, 'تم حذف التصنيف بنجاح');
+}
+
+public function courses(int $id): JsonResponse
+{
+    $category = $this->categoryService->getById($id);
+
+    if (!$category) {
+        return $this->sendError('التصنيف غير موجود');
+    }
+
+    return $this->sendResponse(
+        CourseResource::collection($category->courses),
+        'تم جلب كورسات التصنيف بنجاح'
+    );
 }
 }
