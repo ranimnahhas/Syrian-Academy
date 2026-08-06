@@ -36,4 +36,13 @@ class EnrollmentRequestRepository extends BaseRepository
             ->whereIn('status', ['pending', 'paid', 'active'])
             ->exists();
     }
+    public function findByCode(string $code, int $userId)
+    {
+       return $this->model
+           ->where('payment_code', $code)
+           ->where('user_id', $userId)
+           ->where('status', 'paid')
+           ->where('code_expires_at', '>', now())
+           ->first();
+    }
 }

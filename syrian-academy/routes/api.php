@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\CourseController;
 use App\Http\Controllers\Api\V1\TeacherController;
 use App\Http\Controllers\Api\V1\EnrollmentRequestController;
+use App\Http\Controllers\Api\V1\FavoriteController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -40,8 +41,14 @@ Route::prefix('v1')->group(function () {
 
          Route::post('/enrollment-requests', [EnrollmentRequestController::class, 'store']);
          Route::get('/my-enrollments', [EnrollmentRequestController::class, 'myRequests']);
-
+          //لمعلم هاد فقط
          Route::get('/my-courses', [CourseController::class, 'myCourses']);
+         Route::post('/activate-course', [EnrollmentRequestController::class, 'activate']);
+
+         Route::get('/favorites', [FavoriteController::class, 'index']);
+         Route::post('/favorites/toggle', [FavoriteController::class, 'toggle']);
+         Route::put('/favorites/note', [FavoriteController::class, 'updateNote']);
+         Route::put('/favorites/position', [FavoriteController::class, 'updatePosition']);
 
         // Admin Only
         Route::middleware('admin')->group(function () {
@@ -62,6 +69,12 @@ Route::prefix('v1')->group(function () {
 
                Route::get('/enrollment-requests', [EnrollmentRequestController::class, 'index']);
                Route::get('/enrollment-requests/{id}', [EnrollmentRequestController::class, 'show']);
+
+            // Enrollment Requests - عمليات الأدمن
+               Route::post('/enrollment-requests/{id}/approve', [EnrollmentRequestController::class, 'approve']);
+               Route::post('/enrollment-requests/{id}/reject', [EnrollmentRequestController::class, 'reject']);
+               Route::post('/enrollment-requests/{id}/regenerate-code', [EnrollmentRequestController::class, 'regenerateCode']);
+               Route::post('/enrollment-requests/{id}/cancel-code', [EnrollmentRequestController::class, 'cancelCode']);
         });
     });
 });
