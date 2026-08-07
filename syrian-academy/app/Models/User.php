@@ -30,4 +30,14 @@ class User extends Authenticatable
         'password' => 'hashed',
         'last_login_at' => 'datetime',
     ];
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class)->latest();
+    }
+
+    public function unreadNotifications()
+    {
+        return $this->hasMany(Notification::class)->unread();
+    }
 }
