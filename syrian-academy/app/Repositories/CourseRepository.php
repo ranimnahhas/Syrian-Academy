@@ -64,4 +64,23 @@ class CourseRepository extends BaseRepository
             ->latest()
             ->get();
     }
+
+
+    public function search(string $query, int $perPage = 15): LengthAwarePaginator
+    {
+       return $this->model
+           ->with(['category', 'teacher.user'])
+           ->where(function ($q) use ($query) {
+            $q->where('title', 'LIKE', "%{$query}%")
+             ->orWhere('short_description', 'LIKE', "%{$query}%")
+              ->orWhereHas('category', function ($cat) use ($query) {
+                     $cat->where('name', 'LIKE', "%{$query}%");
+                 })
+                 ->orWhereHas('teacher.user', function ($user) use ($query) {
+                     $user->where('name', 'LIKE', "%{$query}%");
+                 });
+           })
+           ->latest()
+           ->paginate($perPage);
+    }
 }

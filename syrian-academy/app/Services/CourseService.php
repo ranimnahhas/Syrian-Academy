@@ -70,4 +70,8 @@ public function getByTeacher(int $teacherId)
 {
     return $this->courseRepository->getByTeacher($teacherId);
 }
+public function search(string $query, int $perPage = 15)
+{
+    return $this->courseRepository->search($query, $perPage);
+}
 }

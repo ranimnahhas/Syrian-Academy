@@ -112,5 +112,21 @@ class AuthController extends BaseController
 
     return $this->sendResponse(null, 'تم حذف الحساب بنجاح');
 }
+public function studentsReport(): JsonResponse
+{
+    $stats = $this->userService->getStudentsStats();
+
+    return $this->sendResponse($stats, 'تم جلب تقرير الطلاب بنجاح');
+}
+
+public function studentsList(): JsonResponse
+{
+    $students = $this->userService->getStudents();
+
+    return $this->sendResponse(
+        \App\Http\Resources\Api\V1\UserResource::collection($students),
+        'تم جلب قائمة الطلاب بنجاح'
+    );
+}
   
 }
