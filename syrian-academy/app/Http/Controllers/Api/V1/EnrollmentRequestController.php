@@ -149,4 +149,18 @@ class EnrollmentRequestController extends BaseController
             'تم تفعيل الكورس بنجاح'
         ); 
     }
+    public function filter(Request $request): JsonResponse
+{
+    $filters = $request->only([
+        'status', 'course_id', 'user_id', 
+        'date_from', 'date_to', 'search', 'per_page'
+    ]);
+
+    $requests = $this->enrollmentRequestService->filter($filters);
+
+    return $this->sendResponse(
+        EnrollmentRequestResource::collection($requests),
+        'تم جلب الطلبات بنجاح'
+    );
+}
 }

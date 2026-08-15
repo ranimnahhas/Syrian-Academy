@@ -157,4 +157,8 @@ class EnrollmentRequestService
     {
         return strtoupper(Str::random(10));
     }
+    public function filter(array $filters)
+{
+    return $this->enrollmentRequestRepository->filter($filters);
+}
 }

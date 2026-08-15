@@ -3,9 +3,14 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
+     public function __construct(
+        private UserRepository $userRepository
+     ) {}
     public function updateProfile(User $user, array $data): User
     {
         $user->update($data);
@@ -31,5 +36,14 @@ class UserService
     
     // Soft delete
     $user->delete();
+}
+public function getStudentsStats(): array
+{
+    return $this->userRepository->getStudentsStats();
+}
+
+public function getStudents()
+{
+    return $this->userRepository->getStudents();
 }
 }

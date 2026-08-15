@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\V1\TeacherController;
 use App\Http\Controllers\Api\V1\EnrollmentRequestController;
 use App\Http\Controllers\Api\V1\FavoriteController;
 use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\V1\ReviewController;
+use App\Http\Controllers\Api\V1\SettingController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -26,9 +28,12 @@ Route::prefix('v1')->group(function () {
     Route::get('/courses/free', [CourseController::class, 'free']);
     Route::get('/courses/paid', [CourseController::class, 'paid']);
     Route::get('/courses', [CourseController::class, 'index']);
+    Route::get('/courses/search', [CourseController::class, 'search']);
     Route::get('/courses/{id}', [CourseController::class, 'show']);
     Route::get('/teachers/{id}/courses', [TeacherController::class, 'courses']);
     Route::get('/categories/{id}/courses', [CategoryController::class, 'courses']);
+    Route::get('/courses/{courseId}/reviews', [ReviewController::class, 'courseReviews']); 
+    Route::get('/settings', [SettingController::class, 'index']);
     
 
     // Protected
@@ -57,6 +62,9 @@ Route::prefix('v1')->group(function () {
         Route::post('/notifications', [NotificationController::class, 'store']);
         Route::put('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
         Route::put('/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+        Route::post('/reviews', [ReviewController::class, 'store']);
+        // طالب/أدمن يحذف تقييم
+        Route::delete('/reviews/{id}', [ReviewController::class, 'destroy']);
 
         // Admin Only
         Route::middleware('admin')->group(function () {
@@ -74,7 +82,8 @@ Route::prefix('v1')->group(function () {
             Route::post('/courses', [CourseController::class, 'store']);
             Route::put('/courses/{id}', [CourseController::class, 'update']);
             Route::delete('/courses/{id}', [CourseController::class, 'destroy']);
-
+            
+            Route::get('/enrollment-requests/filter', [EnrollmentRequestController::class, 'filter']);
             Route::get('/enrollment-requests', [EnrollmentRequestController::class, 'index']);
             Route::get('/enrollment-requests/{id}', [EnrollmentRequestController::class, 'show']);
 
@@ -83,6 +92,14 @@ Route::prefix('v1')->group(function () {
             Route::post('/enrollment-requests/{id}/reject', [EnrollmentRequestController::class, 'reject']);
             Route::post('/enrollment-requests/{id}/regenerate-code', [EnrollmentRequestController::class, 'regenerateCode']);
             Route::post('/enrollment-requests/{id}/cancel-code', [EnrollmentRequestController::class, 'cancelCode']);
+            Route::get('/reviews/pending', [ReviewController::class, 'pending']);
+            Route::post('/reviews/{id}/approve', [ReviewController::class, 'approve']);
+
+            Route::put('/settings/{key}', [SettingController::class, 'update']);
+            Route::delete('/settings/{key}', [SettingController::class, 'destroy']);
+
+            Route::get('/reports/students', [AuthController::class, 'studentsReport']);
+            Route::get('/reports/students/list', [AuthController::class, 'studentsList']);
         });
     });
 });

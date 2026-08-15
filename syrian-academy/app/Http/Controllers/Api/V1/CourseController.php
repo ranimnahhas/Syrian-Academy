@@ -7,6 +7,7 @@ use App\Http\Requests\Api\V1\UpdateCourseRequest;
 use App\Http\Resources\Api\V1\CourseResource;
 use App\Services\CourseService;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\Api\V1\SearchCourseRequest;
 
 class CourseController extends BaseController
 {
@@ -119,6 +120,17 @@ class CourseController extends BaseController
        return $this->sendResponse(
            CourseResource::collection($courses),
            'تم جلب كورساتك بنجاح'
+       );
+    }
+
+
+    public function search(SearchCourseRequest $request): JsonResponse
+    {
+       $courses = $this->courseService->search($request->q);
+
+       return $this->sendResponse(
+           CourseResource::collection($courses),
+          'تم البحث بنجاح'
        );
     }
 }
