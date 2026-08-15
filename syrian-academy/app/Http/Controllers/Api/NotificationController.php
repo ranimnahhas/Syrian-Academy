@@ -2,80 +2,129 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Notification;
-use App\Events\NotificationSent;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\SendNotificationRequest;
+use App\Http\Resources\NotificationResource;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
+    protected $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
+
+    // كانت send
+    public function store(SendNotificationRequest $request)
+    {
+        $notification = $this->notificationService->send($request->validated());
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تم إرسال الإشعار بنجاح',
+            'data' => new NotificationResource($notification),
+        ]);
+    }
+
+    // كانت index
     public function index()
     {
-        $notifications = Auth::user()->notifications()->paginate(15);
+        $userId = Auth::id();
+        $notifications = $this->notificationService->getUserNotifications($userId);
+
         return response()->json([
-            'status' => true,
-            'data' => $notifications
+            'success' => true,
+            'data' => NotificationResource::collection($notifications),
         ]);
     }
 
-    public function unread()
+    // كانت unread
+    public function getUnread()
     {
-        $unread = Auth::user()->unreadNotifications()->get();
+        $userId = Auth::id();
+        $notifications = $this->notificationService->getUnreadNotifications($userId);
+
         return response()->json([
-            'status' => true,
-            'count' => $unread->count(),
-            'data' => $unread
+            'success' => true,
+            'data' => NotificationResource::collection($notifications),
         ]);
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'title' => 'required|string|max:255',
-            'message' => 'required|string',
-        ]);
-
-        $notification = Notification::create([
-            'user_id' => $request->user_id,
-            'title' => $request->title,
-            'message' => $request->message,
-        ]);
-
-        // بث الإشعار في الوقت الفعلي
-        broadcast(new NotificationSent($notification));
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Notification created successfully',
-            'data' => $notification
-        ]);
-    }
-
+    // كانت markAsRead
     public function markAsRead($id)
     {
-        $notification = Notification::where('user_id', Auth::id())
-            ->findOrFail($id);
-        
-        $notification->markAsRead();
+        $userId = Auth::id();
+        $result = $this->notificationService->markAsRead($id, $userId);
+
+        if (!$result) {
+            return response()->json([
+                'success' => false,
+                'message' => 'الإشعار غير موجود',
+            ], 404);
+        }
 
         return response()->json([
-            'status' => true,
-            'message' => 'Notification marked as read'
+            'success' => true,
+            'message' => 'تم تحديث الإشعار كمقروء',
         ]);
     }
 
+    // كانت markAllAsRead
     public function markAllAsRead()
     {
-        Auth::user()->unreadNotifications()->update([
-            'is_read' => true,
-            'read_at' => now()
-        ]);
+        $userId = Auth::id();
+        $count = $this->notificationService->markAllAsRead($userId);
 
         return response()->json([
-            'status' => true,
-            'message' => 'All notifications marked as read'
+            'success' => true,
+            'message' => "تم تحديد {$count} إشعار كمقروء",
+        ]);
+    }
+
+    // كانت destroy
+    public function destroy($id)
+    {
+        $userId = Auth::id();
+        $result = $this->notificationService->delete($id, $userId);
+
+        if (!$result) {
+            return response()->json([
+                'success' => false,
+                'message' => 'الإشعار غير موجود',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تم حذف الإشعار بنجاح',
+        ]);
+    }
+
+    // كانت destroyAll
+    public function destroyAll()
+    {
+        $userId = Auth::id();
+        $count = $this->notificationService->deleteAll($userId);
+
+        return response()->json([
+            'success' => true,
+            'message' => "تم حذف {$count} إشعار",
+        ]);
+    }
+
+    // كانت unreadCount
+    public function getUnreadCount()
+    {
+        $userId = Auth::id();
+        $count = $this->notificationService->getUnreadCount($userId);
+
+        return response()->json([
+            'success' => true,
+            'unread_count' => $count,
         ]);
     }
 }

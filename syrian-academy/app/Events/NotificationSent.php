@@ -5,11 +5,11 @@ namespace App\Events;
 use App\Models\Notification;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;  // ✅ تغيير到这
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class NotificationSent implements ShouldBroadcast
+class NotificationSent implements ShouldBroadcastNow  // ✅ تغيير到这
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
