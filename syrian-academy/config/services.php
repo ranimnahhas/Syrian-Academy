@@ -34,5 +34,10 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'bunny' => [
+    'library_id' => env('BUNNY_STREAM_LIBRARY_ID'),
+    'api_key'    => env('BUNNY_STREAM_API_KEY'),
+    'token_key'  => env('BUNNY_STREAM_TOKEN_KEY'),
+    'hostname'   => env('BUNNY_STREAM_HOSTNAME', 'iframe.mediadelivery.net'),
+],
 ];
