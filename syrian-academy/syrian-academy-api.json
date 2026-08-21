@@ -1,0 +1,1036 @@
+{
+  "info": {
+    "name": "Syrian Academy API - Complete",
+    "description": "توثيق كامل لكل الروتات والحقول بدون نقص",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Auth - Public",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"طالب جديد\",\n    \"email\": \"student@test.com\",\n    \"phone\": \"0999000000\",\n    \"password\": \"12345678\",\n    \"password_confirmation\": \"12345678\"\n}"
+            },
+            "url": "{{base_url}}/register"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"student@test.com\",\n    \"password\": \"12345678\"\n}"
+            },
+            "url": "{{base_url}}/login"
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"student@test.com\"\n}"
+            },
+            "url": "{{base_url}}/forgot-password"
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"token\": \"TOKEN_FROM_EMAIL\",\n    \"email\": \"student@test.com\",\n    \"password\": \"newpass123\",\n    \"password_confirmation\": \"newpass123\"\n}"
+            },
+            "url": "{{base_url}}/reset-password"
+          }
+        },
+        {
+          "name": "Contact - Send Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"أحمد\",\n    \"email\": \"ahmed@test.com\",\n    \"phone\": \"0999111222\",\n    \"subject\": \"استفسار عن الكورسات\",\n    \"message\": \"كيف يمكنني التسجيل في الكورسات؟\"\n}"
+            },
+            "url": "{{base_url}}/contacts"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Categories - Public",
+      "item": [
+        {
+          "name": "All Categories",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/categories"
+          }
+        },
+        {
+          "name": "Show Category",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/categories/1"
+          }
+        },
+        {
+          "name": "Category Courses",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/categories/1/courses"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Teachers - Public",
+      "item": [
+        {
+          "name": "All Teachers",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/teachers"
+          }
+        },
+        {
+          "name": "Show Teacher",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/teachers/1"
+          }
+        },
+        {
+          "name": "Teacher Courses",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/teachers/1/courses"
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Courses - Public",
+      "item": [
+        {
+          "name": "Latest Courses",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/courses/latest"
+          }
+        },
+        {
+          "name": "Free Courses",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/courses/free"
+          }
+        },
+        {
+          "name": "Paid Courses",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/courses/paid"
+          }
+        },
+        {
+          "name": "Search Courses",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": {
+              "raw": "{{base_url}}/courses/search?q=laravel",
+              "host": ["{{base_url}}"],
+              "path": ["courses", "search"],
+              "query": [{"key": "q", "value": "laravel"}]
+            }
+          }
+        },
+        {
+          "name": "All Courses",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/courses"
+          }
+        },
+        {
+          "name": "Show Course",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/courses/1"
+          }
+        },
+        {
+          "name": "Course Reviews",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/courses/1/reviews"
+          }
+        },
+        {
+          "name": "Course Lessons",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/courses/1/lessons"
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Settings - Public",
+      "item": [
+        {
+          "name": "All Settings",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/settings"
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Protected - All Users",
+      "item": [
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "url": "{{base_url}}/logout"
+          }
+        },
+        {
+          "name": "Get User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "url": "{{base_url}}/user"
+          }
+        },
+        {
+          "name": "Delete Account",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "url": "{{base_url}}/account"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"اسم جديد\",\n    \"email\": \"new@test.com\",\n    \"phone\": \"0999888777\"\n}"
+            },
+            "url": "{{base_url}}/profile"
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"current_password\": \"12345678\",\n    \"new_password\": \"newpass123\",\n    \"new_password_confirmation\": \"newpass123\"\n}"
+            },
+            "url": "{{base_url}}/change-password"
+          }
+        },
+        {
+          "name": "Submit Enrollment Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"course_id\": 1\n}"
+            },
+            "url": "{{base_url}}/enrollment-requests"
+          }
+        },
+        {
+          "name": "My Enrollments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "url": "{{base_url}}/my-enrollments"
+          }
+        },
+        {
+          "name": "Activate Course",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"code\": \"ABC123XYZ\"\n}"
+            },
+            "url": "{{base_url}}/activate-course"
+          }
+        },
+        {
+          "name": "My Courses (Teacher)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{teacher_token}}"}
+            ],
+            "url": "{{base_url}}/my-courses"
+          }
+        },
+        {
+          "name": "My Favorites",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "url": "{{base_url}}/favorites"
+          }
+        },
+        {
+          "name": "Toggle Favorite",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"course_id\": 1\n}"
+            },
+            "url": "{{base_url}}/favorites/toggle"
+          }
+        },
+        {
+          "name": "Update Favorite Note",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"course_id\": 1,\n    \"note\": \"كورس مهم\"\n}"
+            },
+            "url": "{{base_url}}/favorites/note"
+          }
+        },
+        {
+          "name": "Update Favorite Position",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"course_id\": 1,\n    \"position\": 2\n}"
+            },
+            "url": "{{base_url}}/favorites/position"
+          }
+        },
+        {
+          "name": "My Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "url": "{{base_url}}/notifications"
+          }
+        },
+        {
+          "name": "Unread Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "url": "{{base_url}}/notifications/unread"
+          }
+        },
+        {
+          "name": "Mark Notification Read",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "url": "{{base_url}}/notifications/1/read"
+          }
+        },
+        {
+          "name": "Mark All Read",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "url": "{{base_url}}/notifications/read-all"
+          }
+        },
+        {
+          "name": "Send Notification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"user_id\": 4,\n    \"title\": \"تهانينا\",\n    \"message\": \"تم قبول طلبك\"\n}"
+            },
+            "url": "{{base_url}}/notifications"
+          }
+        },
+        {
+          "name": "Add Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"course_id\": 1,\n    \"rating\": 5,\n    \"comment\": \"كورس رائع\"\n}"
+            },
+            "url": "{{base_url}}/reviews"
+          }
+        },
+        {
+          "name": "Delete Review",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "url": "{{base_url}}/reviews/1"
+          }
+        },
+        {
+          "name": "Show Lesson",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "url": "{{base_url}}/lessons/1"
+          }
+        },
+        {
+          "name": "My Questions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "url": "{{base_url}}/my-questions"
+          }
+        },
+        {
+          "name": "Ask Question",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"lesson_id\": 1,\n    \"question\": \"كيف أبدأ؟\"\n}"
+            },
+            "url": "{{base_url}}/questions"
+          }
+        },
+        {
+          "name": "Lesson Questions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "url": "{{base_url}}/lessons/1/questions"
+          }
+        },
+        {
+          "name": "Answer Question",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{teacher_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"answer\": \"ابدأ من المقدمة\"\n}"
+            },
+            "url": "{{base_url}}/questions/1/answer"
+          }
+        },
+        {
+          "name": "Show Question",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{student_token}}"}
+            ],
+            "url": "{{base_url}}/questions/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Admin Only",
+      "item": [
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"تصنيف جديد\",\n    \"description\": \"وصف التصنيف\"\n}"
+            },
+            "url": "{{base_url}}/categories"
+          }
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"اسم محدث\"\n}"
+            },
+            "url": "{{base_url}}/categories/1"
+          }
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/categories/1"
+          }
+        },
+        {
+          "name": "Create Teacher",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"معلم جديد\",\n    \"email\": \"teacher2@test.com\",\n    \"phone\": \"0999000000\",\n    \"password\": \"12345678\",\n    \"specialization\": \"PHP\",\n    \"experience_years\": 5\n}"
+            },
+            "url": "{{base_url}}/teachers"
+          }
+        },
+        {
+          "name": "Update Teacher",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"specialization\": \"Laravel\",\n    \"experience_years\": 6\n}"
+            },
+            "url": "{{base_url}}/teachers/1"
+          }
+        },
+        {
+          "name": "Delete Teacher",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/teachers/1"
+          }
+        },
+        {
+          "name": "Create Course",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"category_id\": 1,\n    \"teacher_id\": 1,\n    \"title\": \"كورس جديد\",\n    \"short_description\": \"وصف مختصر\",\n    \"is_paid\": true,\n    \"price\": 49.99,\n    \"duration_hours\": 20\n}"
+            },
+            "url": "{{base_url}}/courses"
+          }
+        },
+        {
+          "name": "Update Course",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"عنوان محدث\",\n    \"price\": 59.99\n}"
+            },
+            "url": "{{base_url}}/courses/1"
+          }
+        },
+        {
+          "name": "Delete Course",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/courses/1"
+          }
+        },
+        {
+          "name": "Filter Enrollment Requests",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": {
+              "raw": "{{base_url}}/enrollment-requests/filter?status=pending",
+              "host": ["{{base_url}}"],
+              "path": ["enrollment-requests", "filter"],
+              "query": [{"key": "status", "value": "pending"}]
+            }
+          }
+        },
+        {
+          "name": "All Enrollment Requests",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/enrollment-requests"
+          }
+        },
+        {
+          "name": "Show Enrollment Request",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/enrollment-requests/1"
+          }
+        },
+        {
+          "name": "Approve Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/enrollment-requests/1/approve"
+          }
+        },
+        {
+          "name": "Reject Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"reason\": \"الدفع غير مكتمل\"\n}"
+            },
+            "url": "{{base_url}}/enrollment-requests/1/reject"
+          }
+        },
+        {
+          "name": "Regenerate Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/enrollment-requests/1/regenerate-code"
+          }
+        },
+        {
+          "name": "Cancel Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/enrollment-requests/1/cancel-code"
+          }
+        },
+        {
+          "name": "Pending Reviews",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/reviews/pending"
+          }
+        },
+        {
+          "name": "Approve Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/reviews/1/approve"
+          }
+        },
+        {
+          "name": "Update Setting",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"value\": \"new@email.com\"\n}"
+            },
+            "url": "{{base_url}}/settings/email"
+          }
+        },
+        {
+          "name": "Delete Setting",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/settings/facebook"
+          }
+        },
+        {
+          "name": "Students List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/reports/students/list"
+          }
+        },
+        {
+          "name": "Students Report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/reports/students"
+          }
+        },
+        {
+          "name": "Create Lesson",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"course_id\": 1,\n    \"title\": \"درس جديد\",\n    \"short_description\": \"وصف الدرس\",\n    \"content\": \"محتوى الدرس\",\n    \"vimeo_id\": \"video-guid\"\n}"
+            },
+            "url": "{{base_url}}/lessons"
+          }
+        },
+        {
+          "name": "Update Lesson",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"عنوان محدث\"\n}"
+            },
+            "url": "{{base_url}}/lessons/1"
+          }
+        },
+        {
+          "name": "Delete Lesson",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/lessons/1"
+          }
+        },
+        {
+          "name": "Close Question",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/questions/1/close"
+          }
+        },
+        {
+          "name": "Delete Question",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/questions/1"
+          }
+        },
+        {
+          "name": "Unread Contacts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/contacts/unread"
+          }
+        },
+        {
+          "name": "All Contacts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/contacts"
+          }
+        },
+        {
+          "name": "Show Contact",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/contacts/1"
+          }
+        },
+        {
+          "name": "Mark Contact Read",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/contacts/1/read"
+          }
+        },
+        {
+          "name": "Delete Contact",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/contacts/1"
+          }
+        },
+        {
+          "name": "Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/dashboard/stats"
+          }
+        },
+        {
+          "name": "Recent Requests",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/dashboard/recent-requests"
+          }
+        },
+        {
+          "name": "Recent Contacts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/dashboard/recent-contacts"
+          }
+        },
+        {
+          "name": "Revenue Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "url": "{{base_url}}/dashboard/revenue"
+          }
+        }
+      ]
+    }
+  ]
+}

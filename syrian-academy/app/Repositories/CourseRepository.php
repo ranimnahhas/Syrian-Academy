@@ -83,4 +83,15 @@ class CourseRepository extends BaseRepository
            ->latest()
            ->paginate($perPage);
     }
+    public function count(): int
+    {
+      return $this->model->count();
+    }
+    public function getRecent(int $limit = 5)
+    {
+        return $this->model
+            ->latest()
+            ->limit($limit)
+            ->get();
+    }
 }

@@ -10,4 +10,8 @@ class TeacherRepository extends BaseRepository
     {
         parent::__construct($teacher);
     }
+    public function count(): int
+    {
+       return $this->model->count();
+    }
 }

@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\V1\ReviewController;
 use App\Http\Controllers\Api\V1\SettingController;
 use App\Http\Controllers\Api\V1\LessonController;
 use App\Http\Controllers\Api\V1\LessonQuestionController;
+use App\Http\Controllers\Api\V1\ContactController;
+use App\Http\Controllers\Api\V1\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -19,6 +21,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+    Route::post('/contacts', [ContactController::class, 'store']);
 
     // ============ PUBLIC READ (ثابتة) ============
     Route::get('/categories', [CategoryController::class, 'index']);
@@ -132,6 +135,20 @@ Route::prefix('v1')->group(function () {
             
             Route::post('/questions/{id}/close', [LessonQuestionController::class, 'close']);
             Route::delete('/questions/{id}', [LessonQuestionController::class, 'destroy']);
+
+            // Contacts
+            Route::get('/contacts/unread', [ContactController::class, 'unread']);
+            Route::get('/contacts', [ContactController::class, 'index']);
+            Route::get('/contacts/{id}', [ContactController::class, 'show']);
+            Route::put('/contacts/{id}/read', [ContactController::class, 'markAsRead']);
+            Route::delete('/contacts/{id}', [ContactController::class, 'destroy']);
+
+            // Dashboard
+            Route::get('/dashboard/stats', [DashboardController::class, 'index']);
+            Route::get('/dashboard/recent-requests', [DashboardController::class, 'recentRequests']);
+            Route::get('/dashboard/recent-contacts', [DashboardController::class, 'recentContacts']);
+
+            Route::get('/dashboard/revenue', [DashboardController::class, 'revenueStats']);
         });
     });
 });

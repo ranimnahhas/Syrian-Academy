@@ -51,4 +51,8 @@ class UserRepository extends BaseRepository
             'top_students' => $this->getTopStudents(),
         ];
     }
+    public function countStudents(): int
+    {
+     return $this->model->where('role', 'student')->count();
+    }
 }
