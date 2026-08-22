@@ -144,9 +144,9 @@
             </div>
 
             <div class="token-box">
-                <p style="font-size: 14px; color: #6b7280; margin-bottom: 5px;">🔑 رمز التحقق الخاص بك:</p>
+                <p style="font-size: 14px; color: #222429ff; margin-bottom: 5px;">🔑 رمز التحقق الخاص بك:</p>
                 <div class="token-code" id="tokenCode"><?php echo e($token); ?></div>
-                <button class="copy-btn" onclick="copyToken()">📋 نسخ الرمز</button>
+                
             </div>
 
             <div class="warning">
@@ -155,19 +155,14 @@
 
             <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
 
-            <div style="text-align: center;">
-                <p style="color: #6b7280; font-size: 14px;">أو استخدم الرابط المباشر:</p>
-                <a href="<?php echo e(url('/reset-password?token=' . $token . '&email=' . urlencode($email))); ?>" class="btn-primary">
-                    اضغط هنا لإعادة التعيين
-                </a>
-            </div>
+           
 
             <p style="color: #6b7280; font-size: 14px; margin-top: 30px; text-align: center;">
                 إذا لم تطلب إعادة تعيين كلمة المرور، يرجى تجاهل هذا البريد الإلكتروني.
             </p>
         </div>
         <div class="footer">
-            <p>© <?php echo e(date('Y')); ?> تطبيقك. جميع الحقوق محفوظة.</p>
+            <p>© <?php echo e(date('Y')); ?> SyAcademy. جميع الحقوق محفوظة.</p>
         </div>
     </div>
 
