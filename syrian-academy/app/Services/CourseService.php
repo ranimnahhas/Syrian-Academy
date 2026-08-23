@@ -53,6 +53,17 @@ public function update(int $id, array $data)
     $course->update($data);
     return $course->fresh(['category', 'teacher.user']);
 }
+public function delete(int $id): ?bool
+{
+    $course = $this->courseRepository->find($id);
+
+    if (!$course) {
+        return null;
+    }
+
+    $course->delete();
+    return true;
+}
 public function getFree()
 {
     return $this->courseRepository->getFree();
