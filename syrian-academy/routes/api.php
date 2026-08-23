@@ -29,6 +29,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/courses/latest', [CourseController::class, 'latest']);
     Route::get('/courses/free', [CourseController::class, 'free']);
     Route::get('/courses/paid', [CourseController::class, 'paid']);
+    Route::get('/courses/most-enrolled', [CourseController::class, 'mostEnrolled']);
     Route::get('/courses/search', [CourseController::class, 'search']);
     Route::get('/courses', [CourseController::class, 'index']);
     Route::get('/settings', [SettingController::class, 'index']);

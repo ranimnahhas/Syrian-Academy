@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Syrian Academy API - Complete",
-    "description": "توثيق كامل لكل الروتات والحقول بدون نقص",
+    "description": "توثيق كامل لكل الروتس",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -168,6 +168,14 @@
             "method": "GET",
             "header": [{"key": "Accept", "value": "application/json"}],
             "url": "{{base_url}}/courses/paid"
+          }
+        },
+        {
+        "name": "Most Enrolled Courses",
+        "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"} ],
+            "url": "{{base_url}}/courses/most-enrolled"
           }
         },
         {
@@ -533,7 +541,7 @@
               "mode": "raw",
               "raw": "{\n    \"lesson_id\": 1,\n    \"question\": \"كيف أبدأ؟\"\n}"
             },
-            "url": "{{base_url}}ؤ"
+            "url": "{{base_url}}/questions"
           }
         },
         {
@@ -579,7 +587,7 @@
     {
       "name": "7. Admin Only",
       "item": [
-      [
+      
             {
             "name": "Create Category - Text Only",
             "description": "إنشاء تصنيف بدون صورة",
@@ -616,8 +624,8 @@
             },
             "url": "{{base_url}}/categories"
             }
-        }
-        ],
+        },
+        
             {
             "name": "Update Category - Text Only",
             "description": "تحديث بدون صورة",
@@ -668,36 +676,83 @@
           }
         },
         {
-          "name": "Create Teacher",
-          "request": {
+            "name": "Create Teacher - Text Only",
+            "description": "إنشاء معلم بدون صورة",
+            "request": {
             "method": "POST",
             "header": [
-              {"key": "Accept", "value": "application/json"},
-              {"key": "Content-Type", "value": "application/json"},
-              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+                {"key": "Accept", "value": "application/json"},
+                {"key": "Content-Type", "value": "application/json"},
+                {"key": "Authorization", "value": "Bearer {{admin_token}}"}
             ],
             "body": {
-              "mode": "raw",
-              "raw": "{\n    \"name\": \"معلم جديد\",\n    \"email\": \"teacher2@test.com\",\n    \"phone\": \"0999000000\",\n    \"password\": \"12345678\",\n    \"specialization\": \"PHP\",\n    \"experience_years\": 5\n}"
+                "mode": "raw",
+                "raw": "{\n    \"name\": \"معلم جديد\",\n    \"email\": \"teacher2@test.com\",\n    \"phone\": \"0999000000\",\n    \"password\": \"12345678\",\n    \"specialization\": \"PHP\",\n    \"experience_years\": 5\n}"
             },
             "url": "{{base_url}}/teachers"
-          }
+            }
         },
         {
-          "name": "Update Teacher",
-          "request": {
-            "method": "PUT",
+            "name": "Create Teacher - With Photo",
+            "description": "إنشاء معلم مع صورة شخصية",
+            "request": {
+            "method": "POST",
             "header": [
-              {"key": "Accept", "value": "application/json"},
-              {"key": "Content-Type", "value": "application/json"},
-              {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+                {"key": "Accept", "value": "application/json"},
+                {"key": "Authorization", "value": "Bearer {{admin_token}}"}
             ],
             "body": {
-              "mode": "raw",
-              "raw": "{\n    \"specialization\": \"Laravel\",\n    \"experience_years\": 6\n}"
+                "mode": "formdata",
+                "formdata": [
+                {"key": "name", "value": "معلم جديد", "type": "text"},
+                {"key": "email", "value": "teacher2@test.com", "type": "text"},
+                {"key": "phone", "value": "0999000000", "type": "text"},
+                {"key": "password", "value": "12345678", "type": "text"},
+                {"key": "specialization", "value": "PHP", "type": "text"},
+                {"key": "experience_years", "value": "5", "type": "text"},
+                {"key": "photo", "value": "", "type": "file", "src": []}
+                ]
+            },
+            "url": "{{base_url}}/teachers"
+            }
+        },  
+        {
+            "name": "Update Teacher - Text Only",
+            "description": "تحديث بيانات معلم بدون صورة",
+            "request": {
+            "method": "PUT",
+            "header": [
+                {"key": "Accept", "value": "application/json"},
+                {"key": "Content-Type", "value": "application/json"},
+                {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "body": {
+                "mode": "raw",
+                "raw": "{\n    \"specialization\": \"Laravel\",\n    \"experience_years\": 6\n}"
             },
             "url": "{{base_url}}/teachers/1"
-          }
+            }
+        },
+        {
+            "name": "Update Teacher - With Photo",
+            "description": "تحديث بيانات معلم مع صورة شخصية",
+            "request": {
+            "method": "POST",
+            "header": [
+                {"key": "Accept", "value": "application/json"},
+                {"key": "Authorization", "value": "Bearer {{admin_token}}"}
+            ],
+            "body": {
+                "mode": "formdata",
+                "formdata": [
+                {"key": "_method", "value": "PUT", "type": "text"},
+                {"key": "specialization", "value": "Laravel", "type": "text"},
+                {"key": "experience_years", "value": "6", "type": "text"},
+                {"key": "photo", "value": "", "type": "file", "src": []}
+                ]
+            },
+            "url": "{{base_url}}/teachers/1"
+            }
         },
         {
           "name": "Delete Teacher",

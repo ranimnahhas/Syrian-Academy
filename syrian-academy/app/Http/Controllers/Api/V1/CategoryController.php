@@ -50,42 +50,42 @@ class CategoryController extends BaseController
         );
     }
 
-   public function update(UpdateCategoryRequest $request, int $id): JsonResponse
-{
-    $category = $this->categoryService->update($id, $request->validated());
+    public function update(UpdateCategoryRequest $request, int $id): JsonResponse
+    {
+        $category = $this->categoryService->update($id, $request->validated());
 
-    if (!$category) {
-        return $this->sendError('التصنيف غير موجود');
+        if (!$category) {
+            return $this->sendError('التصنيف غير موجود');
+        }
+
+        return $this->sendResponse(
+            new CategoryResource($category),
+            'تم تحديث التصنيف بنجاح'
+        );
     }
-
-    return $this->sendResponse(
-        new CategoryResource($category),
-        'تم تحديث التصنيف بنجاح'
-    );
-}
 
     public function destroy(int $id): JsonResponse
-{
-    $deleted = $this->categoryService->delete($id);
+    {
+        $deleted = $this->categoryService->delete($id);
 
-    if (is_null($deleted)) {
-        return $this->sendError('التصنيف غير موجود');
+        if (is_null($deleted)) {
+            return $this->sendError('التصنيف غير موجود');
+        }
+
+        return $this->sendResponse(null, 'تم حذف التصنيف بنجاح');
     }
 
-    return $this->sendResponse(null, 'تم حذف التصنيف بنجاح');
-}
+    public function courses(int $id): JsonResponse
+    {
+        $category = $this->categoryService->getById($id);
 
-public function courses(int $id): JsonResponse
-{
-    $category = $this->categoryService->getById($id);
+        if (!$category) {
+            return $this->sendError('التصنيف غير موجود');
+        }
 
-    if (!$category) {
-        return $this->sendError('التصنيف غير موجود');
+        return $this->sendResponse(
+            CourseResource::collection($category->courses),
+            'تم جلب كورسات التصنيف بنجاح'
+        );
     }
-
-    return $this->sendResponse(
-        CourseResource::collection($category->courses),
-        'تم جلب كورسات التصنيف بنجاح'
-    );
-}
 }

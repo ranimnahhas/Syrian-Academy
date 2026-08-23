@@ -8,6 +8,7 @@ use App\Http\Resources\Api\V1\CourseResource;
 use App\Services\CourseService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\Api\V1\SearchCourseRequest;
+use App\Services\EnrollmentService;
 
 class CourseController extends BaseController
 {
@@ -132,5 +133,20 @@ class CourseController extends BaseController
            CourseResource::collection($courses),
           'تم البحث بنجاح'
        );
+    }
+
+    public function mostEnrolled(EnrollmentService $enrollmentService): JsonResponse
+    {
+        $courses = $enrollmentService->getMostEnrolledCourses(10);
+
+        return $this->sendResponse(
+            $courses->map(function ($item) {
+                return [
+                    'course'            => new CourseResource($item->course),
+                    'total_enrollments' => $item->total_enrollments,
+                ];
+            }),
+            'تم جلب الكورسات الأكثر تسجيلاً بنجاح'
+        );
     }
 }
