@@ -1,13 +1,14 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -26,8 +27,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'api/*',
         ]);
-         $middleware->prependToGroup('api', \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
-})
+
+        $middleware->prependToGroup('api', \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
+    })
     ->withExceptions(function (Exceptions $exceptions): void {
         // Validation Errors
         $exceptions->render(function (ValidationException $e, Request $request) {
@@ -47,6 +49,16 @@ return Application::configure(basePath: dirname(__DIR__))
                     'success' => false,
                     'message' => 'غير مصرح - يرجى تسجيل الدخول',
                 ], 401);
+            }
+        });
+
+        // Rate Limiting Error
+        $exceptions->render(function (ThrottleRequestsException $e, Request $request) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'طلبات كثيرة جداً - حاول مرة أخرى لاحقاً',
+                ], 429);
             }
         });
 
@@ -75,8 +87,8 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => app()->isProduction() 
-                        ? 'حدث خطأ غير متوقع' 
+                    'message' => app()->isProduction()
+                        ? 'حدث خطأ غير متوقع'
                         : $e->getMessage(),
                 ], 500);
             }
