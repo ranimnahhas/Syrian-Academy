@@ -7,12 +7,15 @@ use App\Repositories\SettingRepository;
 class SettingService
 {
     public function __construct(
-        private SettingRepository $settingRepository
+        private SettingRepository $settingRepository,
+        private CacheService $cacheService
     ) {}
 
     public function getAll()
     {
-        return $this->settingRepository->getAllGrouped();
+        return $this->cacheService->remember('settings_all', function () {
+            return $this->settingRepository->getAllGrouped();
+        });
     }
 
     public function getByGroup(string $group)
@@ -21,32 +24,38 @@ class SettingService
     }
 
     public function update(string $key, string $value)
-{
-    $setting = $this->settingRepository->getByKey($key);
+    {
+        $setting = $this->settingRepository->getByKey($key);
 
-    if (!$setting) {
-        // إنشاء إعداد جديد
-        return $this->settingRepository->create([
-            'key'   => $key,
-            'value' => $value,
-            'type'  => 'url',
-            'group' => 'social',
-            'label' => $key,
-        ]);
+        if (!$setting) {
+            $setting = $this->settingRepository->create([
+                'key'   => $key,
+                'value' => $value,
+                'type'  => 'url',
+                'group' => 'social',
+                'label' => $key,
+            ]);
+        } else {
+            $setting->update(['value' => $value]);
+        }
+
+        $this->cacheService->forget('settings_all');
+
+        return $setting;
     }
 
-    $setting->update(['value' => $value]);
-    return $setting;
-}
-public function delete(string $key): ?bool
-{
-    $setting = $this->settingRepository->getByKey($key);
+    public function delete(string $key): ?bool
+    {
+        $setting = $this->settingRepository->getByKey($key);
 
-    if (!$setting) {
-        return null;
+        if (!$setting) {
+            return null;
+        }
+
+        $setting->delete();
+
+        $this->cacheService->forget('settings_all');
+
+        return true;
     }
-
-    $setting->delete();
-    return true;
-}
 }

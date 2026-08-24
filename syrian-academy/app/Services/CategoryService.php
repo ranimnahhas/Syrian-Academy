@@ -9,17 +9,26 @@ use Illuminate\Support\Str;
 class CategoryService
 {
     public function __construct(
-        private CategoryRepository $categoryRepository
+        private CategoryRepository $categoryRepository,
+        private CacheService $cacheService
     ) {}
 
-    
+    public function getAll()
+    {
+        return $this->cacheService->remember('categories_all', function () {
+            return $this->categoryRepository->all(relations: ['courses']);
+        });
+    }
 
     public function getActive()
     {
         return $this->categoryRepository->getActive();
     }
 
-    
+    public function getById(int $id)
+    {
+        return $this->categoryRepository->find($id, ['courses']);
+    }
 
     public function create(array $data)
     {
@@ -28,7 +37,11 @@ class CategoryService
         }
 
         $data['slug'] = $data['slug'] ?? Str::slug($data['name']);
-        return $this->categoryRepository->create($data);
+        $category = $this->categoryRepository->create($data);
+
+        $this->cacheService->forget('categories_all');
+
+        return $category;
     }
 
     public function update(int $id, array $data)
@@ -51,6 +64,9 @@ class CategoryService
         }
 
         $category->update($data);
+
+        $this->cacheService->forget('categories_all');
+
         return $category;
     }
 
@@ -67,15 +83,9 @@ class CategoryService
         }
 
         $category->delete();
+
+        $this->cacheService->forget('categories_all');
+
         return true;
     }
-    public function getAll()
-{
-    return $this->categoryRepository->all(relations: ['courses']);
-}
-
-public function getById(int $id)
-{
-    return $this->categoryRepository->find($id, ['courses']);
-}
 }

@@ -15,19 +15,22 @@ class DashboardService
         private CourseRepository $courseRepository,
         private TeacherRepository $teacherRepository,
         private EnrollmentRequestRepository $enrollmentRequestRepository,
-        private ContactRepository $contactRepository
+        private ContactRepository $contactRepository,
+        private CacheService $cacheService
     ) {}
 
     public function getStats(): array
     {
-        return [
-            'total_students'     => $this->userRepository->countStudents(),
-            'total_teachers'     => $this->teacherRepository->count(),
-            'total_courses'      => $this->courseRepository->count(),
-            'pending_requests'   => $this->enrollmentRequestRepository->countPending(),
-            'unread_contacts'    => $this->contactRepository->countUnread(),
-            'active_enrollments' => $this->enrollmentRequestRepository->countActive(),
-        ];
+        return $this->cacheService->remember('dashboard_stats', function () {
+            return [
+                'total_students'     => $this->userRepository->countStudents(),
+                'total_teachers'     => $this->teacherRepository->count(),
+                'total_courses'      => $this->courseRepository->count(),
+                'pending_requests'   => $this->enrollmentRequestRepository->countPending(),
+                'unread_contacts'    => $this->contactRepository->countUnread(),
+                'active_enrollments' => $this->enrollmentRequestRepository->countActive(),
+            ];
+        }, 600);
     }
 
     public function getRecentRequests(int $limit = 5)
@@ -39,6 +42,7 @@ class DashboardService
     {
         return $this->contactRepository->getRecent($limit);
     }
+
     public function getRevenueStats(): array
     {
         return $this->enrollmentRequestRepository->getRevenueStats();
