@@ -28,4 +28,15 @@ class StoreCategoryRequest extends FormRequest
             'is_active'   => ['boolean'],
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'name.required'      => 'اسم التصنيف مطلوب',
+            'name.max'           => 'الاسم يجب أن لا يتجاوز 255 حرف',
+            'slug.unique'        => 'الرابط مستخدم مسبقاً',
+            'image.image'        => 'الملف يجب أن يكون صورة',
+            'image.mimes'        => 'الصورة يجب أن تكون jpeg, png, jpg, gif, svg',
+            'image.max'          => 'حجم الصورة يجب أن لا يتجاوز 2MB',
+        ];
+    }
 }

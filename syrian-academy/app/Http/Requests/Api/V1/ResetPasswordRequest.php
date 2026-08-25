@@ -29,6 +29,7 @@ class ResetPasswordRequest extends FormRequest
             'password.required' => 'كلمة المرور مطلوبة',
             'password.min'      => 'كلمة المرور يجب أن تكون 8 أحرف على الأقل',
             'password.confirmed' => 'تأكيد كلمة المرور غير متطابق',
+            'email.email' => 'صيغة الإيميل غير صحيحة',
         ];
     }
 }

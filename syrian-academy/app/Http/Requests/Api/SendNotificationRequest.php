@@ -19,4 +19,14 @@ class SendNotificationRequest extends FormRequest
             'message' => ['required', 'string'],
         ];
     }
+        public function messages(): array
+    {
+        return [
+            'user_id.required' => 'معرف المستخدم مطلوب',
+            'user_id.exists'   => 'المستخدم غير موجود',
+            'title.required'   => 'عنوان الإشعار مطلوب',
+            'title.max'        => 'العنوان يجب أن لا يتجاوز 255 حرف',
+            'message.required' => 'نص الإشعار مطلوب',
+        ];
+    }
 }

@@ -61,7 +61,14 @@ class LessonService
 
     public function delete(int $id): ?bool
     {
-        return $this->lessonRepository->delete($id);
+        $lesson = $this->lessonRepository->find($id);
+
+        if (!$lesson) {
+            return null;
+        }
+
+        $lesson->delete();
+        return true;
     }
 
     public function incrementViews(int $id)

@@ -26,4 +26,12 @@ class UpdateLessonRequest extends FormRequest
             'resource_type'     => ['nullable', 'string', 'max:50'],
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'course_id.exists'         => 'الكورس غير موجود',
+            'title.max'                => 'العنوان يجب أن لا يتجاوز 255 حرف',
+            'short_description.max'    => 'الوصف يجب أن لا يتجاوز 500 حرف',
+        ];
+    }
 }

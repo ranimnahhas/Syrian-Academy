@@ -67,7 +67,7 @@ Route::prefix('v1')->group(function () {
         Route::put('/favorites/position', [FavoriteController::class, 'updatePosition']);
 
         Route::get('/notifications', [NotificationController::class, 'index']);
-        Route::get('/notifications/unread', [NotificationController::class, 'unread']);
+        Route::get('/notifications/unread', [NotificationController::class, 'getUnread']);
         Route::put('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
         Route::put('/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
         Route::post('/notifications', [NotificationController::class, 'store']);
@@ -83,6 +83,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/questions/{id}/answer', [LessonQuestionController::class, 'answer']);
         Route::get('/questions-pending', [LessonQuestionController::class, 'pending']);
         Route::get('/questions/{id}', [LessonQuestionController::class, 'show']);
+       
 
         // ============ ADMIN ONLY ============
         Route::middleware('admin')->group(function () {

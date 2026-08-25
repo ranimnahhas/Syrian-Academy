@@ -33,6 +33,16 @@ class StoreTeacherRequest extends FormRequest
             'email.unique'      => 'الإيميل مستخدم مسبقاً',
             'password.required' => 'كلمة المرور مطلوبة',
             'password.min'      => 'كلمة المرور يجب أن تكون 8 أحرف على الأقل',
-        ];
+            'email.email'          => 'صيغة الإيميل غير صحيحة',
+            'phone.max'            => 'رقم الهاتف يجب أن لا يتجاوز 20 رقماً',
+            'photo.image'          => 'الملف يجب أن يكون صورة',
+            'photo.mimes'          => 'الصورة يجب أن تكون jpeg, png, jpg, gif, svg',
+            'photo.max'            => 'حجم الصورة يجب أن لا يتجاوز 2MB',
+            'experience_years.integer' => 'سنوات الخبرة يجب أن تكون رقماً',
+            'experience_years.min' => 'سنوات الخبرة يجب أن تكون 0 أو أكثر',
+            'rating.numeric'       => 'التقييم يجب أن يكون رقماً',
+            'rating.min'           => 'أقل تقييم هو 0',
+            'rating.max'           => 'أعلى تقييم هو 5',
+         ];
     }
 }

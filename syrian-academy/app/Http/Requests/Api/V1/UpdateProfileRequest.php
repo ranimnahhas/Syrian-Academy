@@ -22,9 +22,11 @@ class UpdateProfileRequest extends FormRequest
 
     public function messages(): array
     {
-        return [
+        return [     
             'email.unique' => 'الإيميل مستخدم مسبقاً',
+            'email.email'  => 'صيغة الإيميل غير صحيحة',
             'name.max'     => 'الاسم يجب أن لا يتجاوز 255 حرف',
+            'phone.max'    => 'رقم الهاتف يجب أن لا يتجاوز 20 رقماً',
         ];
     }
 }

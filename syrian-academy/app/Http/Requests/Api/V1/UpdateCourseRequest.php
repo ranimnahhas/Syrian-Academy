@@ -43,6 +43,10 @@ class UpdateCourseRequest extends FormRequest
             'teacher_id.exists'  => 'المدرس غير موجود',
             'title.max'          => 'العنوان يجب أن لا يتجاوز 255 حرف',
             'slug.unique'        => 'الرابط مستخدم مسبقاً',
+            'price.numeric'       => 'السعر يجب أن يكون رقماً',
+            'price.min'           => 'السعر يجب أن يكون 0 أو أكثر',
+            'duration_hours.integer' => 'المدة يجب أن تكون رقماً',
+            'duration_hours.min'  => 'المدة يجب أن تكون 0 أو أكثر',
         ];
     }
 }
